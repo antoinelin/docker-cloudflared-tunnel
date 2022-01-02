@@ -2,16 +2,19 @@ FROM alpine:latest
 
 LABEL antoinelin.com.authors="Antoine Lin <contact@antoinelin.com>"
 
+ARG TUNNEL_NAME
 ENV TUNNEL_NAME $TUNNEL_NAME
+
+ARG TUNNEL_HOSTNAME
 ENV TUNNEL_HOSTNAME $TUNNEL_HOSTNAME
+
+ARG TUNNEL_URL
 ENV TUNNEL_URL $TUNNEL_URL
 
-RUN apk update && apk upgrade && \
-    apk add --no-cache tar libc6-compat curl
-
 WORKDIR /root
-RUN curl -s -O https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.tgz
-RUN tar zxf cloudflared-stable-linux-amd64.tgz
-RUN chmod +x ./cloudflared
+
+RUN wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64
+RUN cp ./cloudflared-linux-arm64 /usr/local/bin/cloudflared
+RUN chmod +x /usr/local/bin/cloudflared
 
 CMD ["sh", "/etc/cloudflared/start.sh"]
