@@ -8,7 +8,7 @@ ENV TUNNEL_URL $TUNNEL_URL
 
 WORKDIR /root
 
-RUN wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64
+RUN wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
 RUN cp ./cloudflared-linux-arm64 /usr/local/bin/cloudflared
 RUN chmod +x /usr/local/bin/cloudflared
 
